@@ -1,9 +1,11 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, Text, View, Keyboard} from 'react-native';
 import RNOtpVerify from 'react-native-otp-verify';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const App = () => {
+
+  const [otpCode, setOtpCode] = useState();
   const otpView = useRef();
   useEffect(() => {
     RNOtpVerify.getHash()
@@ -19,7 +21,7 @@ const App = () => {
       .catch(p => console.log(p));
 
     setTimeout(() => {
-      otpView?.current.focusField(0);
+      otpView?.current?.focusField(0);
     }, 500);
 
     return () => {
@@ -28,8 +30,14 @@ const App = () => {
   }, []);
 
   const otpHandler = message => {
-    console.log('message ', message);
-    Keyboard.dismiss();
+    if(message){
+      const otp = /(\d{4})/g.exec(message)[1];
+      console.log('message ', message, otp);
+      setOtpCode(otp);
+      Keyboard.dismiss();
+    }
+  
+    
   };
 
   return (
@@ -39,8 +47,8 @@ const App = () => {
         ref={input => (otpView.current = input)}
         style={{width: '60%', height: 200}}
         pinCount={4}
-        // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-        // onCodeChanged = {code => { this.setState({code})}}
+        code={otpCode} 
+        //onCodeChanged = {code => { setOtpCode({code})}}
         autoFocusOnLoad={false}
         keyboardAppearance={'default'}
         keyboardType={'number-pad'}
@@ -86,10 +94,12 @@ const styles = StyleSheet.create({
     height: 45,
     borderWidth: 0,
     borderBottomWidth: 1,
+    color:'blue'
   },
 
   underlineStyleHighLighted: {
     borderColor: '#03DAC6',
+    color:'blue'
   },
 });
 
