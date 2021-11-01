@@ -8,7 +8,7 @@ This library internaly using the google SMS Retrieval API to verify message in a
 In order to detect the message, SMS message must include a hash(11 character) that identifies your app. This hash can be obtained by using the getHash() method.
 message structure should be like this and be no longer than 140 bytes -> 
 
-Your otp is 1234 for exampleApp. ebcdfxaseza
+Your OTP is 4267 for exampleApp. eRUQmcCmqjQ
 
 
 To generate hash string using app's keystore and alias use this link https://developers.google.com/identity/sms-retriever/verify
